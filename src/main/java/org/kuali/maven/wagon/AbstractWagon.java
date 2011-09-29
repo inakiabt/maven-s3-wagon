@@ -168,6 +168,11 @@ public abstract class AbstractWagon implements Wagon {
         transferListeners.fireTransferStarted(resource, TransferEvent.REQUEST_GET);
 
         try {
+            // Added this line to create folder tree if it not exists
+	    if (!destination.getParentFile().exists()) {
+	       destination.getParentFile().mkdirs();
+	    }
+
             getResource(resourceName, destination, new TransferProgress(resource, TransferEvent.REQUEST_GET,
                     transferListeners));
             transferListeners.fireTransferCompleted(resource, TransferEvent.REQUEST_GET);
